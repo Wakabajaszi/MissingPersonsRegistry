@@ -9,8 +9,8 @@
 <h4>Person</h4>
 <hr />
 <div class="row">
-    <div class="col-md-5 ml-auto mr-auto">
-        <form asp-action="Create">
+    <div class="col-md-4 ml-auto mr-auto">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div id="partOne">
                 <div class="form-group">
@@ -69,9 +69,9 @@
                     <span asp-validation-for="IdentifyingMarks" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="ImageSrc" class="control-label"></label>
-                    <input asp-for="ImageSrc" class="form-control" />
-                    <span asp-validation-for="ImageSrc" class="text-danger"></span>
+                    <label asp-for="PersonImage" class="control-label"></label>
+                    <input asp-for="PersonImage" accept="image/*" />
+                    <span asp-validation-for="PersonImage" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="DissapeerDetails.City" class="control-label"></label>
@@ -85,7 +85,7 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="DissapeerDetails.PostalCode" class="control-label"></label>
-                    <input asp-for="DissapeerDetails.PostalCode" class="form-control" />
+                    <input asp-for="DissapeerDetails.PostalCode" class="form-control" maxlength="6" />
                     <span asp-validation-for="DissapeerDetails.PostalCode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -99,7 +99,10 @@
                     <span asp-validation-for="DissapeerDetails.Desciption" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Dodaj" class="btn btn-primary"  />
+                    <input id="previousPageButton" type="button" value="Cofnij" class="btn btn-primary float-left mr-3" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj" class="btn btn-primary" />
                 </div>
             </div>
             
@@ -117,6 +120,7 @@
 
 <script type="text/javascript">
     const button = document.getElementById("nextButton");
+    const buttonPreviousPage = document.getElementById("previousPageButton");
     const divPartOne = document.getElementById("partOne");
     const divPartTwo = document.getElementById("partTwo");
 
@@ -127,5 +131,11 @@
         divPartOne.style.display = "none";
         divPartTwo.style.display = "";
     }
+    const previousPartForm = () => {
+        divPartOne.style.display = "";
+        divPartTwo.style.display = "none";
+
+    }
     button.addEventListener("click", nextPartForm);
+    buttonPreviousPage.addEventListener("click", previousPartForm);
 </script>
