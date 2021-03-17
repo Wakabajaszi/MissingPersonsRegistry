@@ -41,9 +41,12 @@ namespace MissingPersonsRegistry.Controllers
             {
                 return Redirect("Home/Create");
             }
+            
             string filePath = UploadFile(person);
             person.ImageSrc = filePath;
-            
+           
+            dbContext.Persons.Add(person);
+            dbContext.SaveChanges();
 
             return Redirect("Index");
         }
