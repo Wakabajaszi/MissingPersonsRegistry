@@ -23,7 +23,7 @@ namespace MissingPersonsRegistry.Controllers
             return View();
         }
 
-        public IActionResult Details() 
+        public IActionResult Create() 
         {
             return View();
         }

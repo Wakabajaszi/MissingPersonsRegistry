@@ -1,0 +1,131 @@
+﻿@model MissingPersonsRegistry.Models.Person
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Person</h4>
+<hr />
+<div class="row">
+    <div class="col-md-5 ml-auto mr-auto">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div id="partOne">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" class="form-control" />
+                    <span asp-validation-for="Surname" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DateOfBirth" class="control-label"></label>
+                    <input asp-for="DateOfBirth" class="form-control" />
+                    <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sex.Name" class="control-label"></label>
+                    <select asp-for="Sex.Name" class="form-control" asp-items="ViewBag.Sex"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Height" class="control-label"></label>
+                    <input asp-for="Height" class="form-control" />
+                    <span asp-validation-for="Height" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Weight" class="control-label"></label>
+                    <input asp-for="Weight" class="form-control" />
+                    <span asp-validation-for="Weight" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Hair" class="control-label"></label>
+                    <input asp-for="Hair" class="form-control" />
+                    <span asp-validation-for="Hair" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Eyes" class="control-label"></label>
+                    <input asp-for="Eyes" class="form-control" />
+                    <span asp-validation-for="Eyes" class="text-danger"></span>
+                </div>
+               
+                <div id="nextButton" class="form-group">
+                    <input type="button" value="Dalej" class="btn btn-primary" />
+                </div>
+            </div>
+            <div id="partTwo">
+                <div class="form-group">
+                    <label asp-for="Nationality" class="control-label"></label>
+                    <input asp-for="Nationality" class="form-control" />
+                    <span asp-validation-for="Nationality" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdentifyingMarks" class="control-label"></label>
+                    <input asp-for="IdentifyingMarks" class="form-control" />
+                    <span asp-validation-for="IdentifyingMarks" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ImageSrc" class="control-label"></label>
+                    <input asp-for="ImageSrc" class="form-control" />
+                    <span asp-validation-for="ImageSrc" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DissapeerDetails.City" class="control-label"></label>
+                    <input asp-for="DissapeerDetails.City" class="form-control" />
+                    <span asp-validation-for="DissapeerDetails.City" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DissapeerDetails.Street" class="control-label"></label>
+                    <input asp-for="DissapeerDetails.Street" class="form-control" />
+                    <span asp-validation-for="DissapeerDetails.Street" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DissapeerDetails.PostalCode" class="control-label"></label>
+                    <input asp-for="DissapeerDetails.PostalCode" class="form-control" />
+                    <span asp-validation-for="DissapeerDetails.PostalCode" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DissapeerDetails.DissapeerDate" class="control-label"></label>
+                    <input asp-for="DissapeerDetails.DissapeerDate" class="form-control" />
+                    <span asp-validation-for="DissapeerDetails.DissapeerDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DissapeerDetails.Desciption" class="control-label"></label>
+                    <textarea asp-for="DissapeerDetails.Desciption" class="form-control" rows="4" maxlength="1500" style="resize: none;"></textarea>
+                    <span asp-validation-for="DissapeerDetails.Desciption" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj" class="btn btn-primary"  />
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script type="text/javascript">
+    const button = document.getElementById("nextButton");
+    const divPartOne = document.getElementById("partOne");
+    const divPartTwo = document.getElementById("partTwo");
+
+    divPartTwo.style.display = "none";
+
+    const nextPartForm = () =>
+    {
+        divPartOne.style.display = "none";
+        divPartTwo.style.display = "";
+    }
+    button.addEventListener("click", nextPartForm);
+</script>
