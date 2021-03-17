@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace MissingPersonsRegistry.Models
 {
-    public class DissapeerDetails
+    [Table("DissapearDetails")]
+    public class DissapearDetails
     {
         public int Id { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
         public string City { get; set; }
+        [Column(TypeName = "nvarchar(100)")]
         public string Street { get; set; }
+        [Column(TypeName = "nvarchar(6)")]
         public string PostalCode { get; set; }
+        [Column(TypeName = "smalldatetime")]
         public DateTime DissapeerDate { get; set; }
         [Column(TypeName = "Text")]
         public string Desciption{ get; set; }
