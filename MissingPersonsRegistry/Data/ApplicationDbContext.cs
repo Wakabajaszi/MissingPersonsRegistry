@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using MissingPersonsRegistry.Models;
 
 namespace MissingPersonsRegistry.Data
 {
@@ -12,5 +13,8 @@ namespace MissingPersonsRegistry.Data
             : base(options)
         {
         }
+        public DbSet<Person> Persons { get; set; }
+        public DbSet<Sex> Sex { get; set; }
+        public DbSet<DissapearDetails> DissapearDetails { get; set; }
     }
 }
