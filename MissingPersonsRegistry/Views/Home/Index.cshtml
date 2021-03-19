@@ -1,37 +1,20 @@
-﻿@{
+﻿@model IEnumerable<MissingPersonsRegistry.Models.Person>
+@{
     ViewData["Title"] = "Home Page";
 }
-
+<link rel="stylesheet" href="~/css/index.css" />
 <div id="siteContainer">
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
+    @foreach (var item in Model)
+    {
+        <div style="" class="mpContainer">
+            <div class="mpImgContainer"><img src="@Url.Content(item.ImageSrc)"></div>
+            <div class="mpDataContainer">
+                <div class="mpName">@item.Name @item.Surname</div>
+                <div class="mpDate">Data zaginięcia: @item.DissapeerDetails.DissapeerDate</div>
+                <div class="mpPlace">Miejsce: @item.DissapeerDetails.City</div>
+                <button asp-controller="Home" value="1" onclick="window.location = '@Url.Action("Details","Home",new { id = item.Id })'" class="mpDetailsButton">Szczegóły</button>
+
+            </div>
         </div>
-
-    </div>
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
-        </div>
-
-    </div>
-
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
-        </div>
-
-    </div>
+    }
 </div>

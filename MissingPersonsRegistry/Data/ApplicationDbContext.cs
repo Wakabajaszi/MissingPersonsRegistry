@@ -13,6 +13,7 @@ namespace MissingPersonsRegistry.Data
             : base(options)
         {
         }
+        
         public DbSet<Person> Persons { get; set; }
         public DbSet<Sex> Sex { get; set; }
         public DbSet<DissapearDetails> DissapearDetails { get; set; }

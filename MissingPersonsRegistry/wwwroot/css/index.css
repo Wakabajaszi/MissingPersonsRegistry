@@ -13,73 +13,91 @@
     margin-left: 6%;
     border: 5px solid black;
     float: left;
-    height: 300px;
+    height: 350px;
     background-color: darkgray;
 }
 
 @media screen and (max-width: 1050px) {
     .mpContainer {
         width: 80%;
-        min-width: 400px;
+        min-width: 500px;
         margin-top: 30px;
         margin-left: 10%;
         border: 5px solid black;
         float: left;
-        height: 300px;
+        height: 350px;
+        background-color: darkgray;
+    }
+}
+@media screen and (max-width: 600px) {
+    #siteContainer {
+        width: 100%;
+        height: 1000px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 40px;
+    }
+    .mpContainer {
+        width: 100%;
+        margin-top: 30px;
+        border: 5px solid black;
+        margin-left: 0px;
+        float: left;
+        height: 350px;
         background-color: darkgray;
     }
 }
 
-.mpImgContainer {
-    width: 40%;
-    height: 100%;
-    display: inline-block;
-    float: left;
-}
-
-img {
-    width: 95%;
-    height: 90%;
-    padding-left: 5%;
-    padding-top: 5%;
-}
-
-.mpDataContainer {
-    width: 60%;
-    display: inline-block;
-}
-
-.mpName, .mpDate, .mpPlace {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 10%;
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-}
-
-.mpDetailsButton {
-    display: block;
-    margin-top: 5%;
-    width: 120px;
-    height: 35px;
-    margin-left: auto;
-    margin-right: auto;
-    border: 1px solid black;
-    font-size: 18px;
-    font-weight: bold;
-    background-color: #7892c2;
-    border-radius: 10px;
-    color: white;
-}
-
-    .mpDetailsButton:hover {
-        background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
-        background-color: #476e9e;
+    .mpImgContainer {
+        width: 45%;
+        height: 100%;
+        display: inline-block;
+        float: left;
     }
 
-    .mpDetailsButton:active {
-        position: relative;
-        top: 1px;
+    img {
+        width: 95%;
+        height: 90%;
+        padding-left: 5%;
+        padding-top: 5%;
     }
+
+    .mpDataContainer {
+        width: 55%;
+        display: inline-block;
+    }
+
+    .mpName, .mpDate, .mpPlace {
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .mpDetailsButton {
+        display: block;
+        margin-top: 10%;
+        width: 120px;
+        height: 35px;
+        margin-left: auto;
+        margin-right: auto;
+        border: 1px solid black;
+        font-size: 18px;
+        font-weight: bold;
+        background-color: #7892c2;
+        border-radius: 10px;
+        color: white;
+    }
+
+        .mpDetailsButton:hover {
+            background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+            background-color: #476e9e;
+        }
+
+        .mpDetailsButton:active {
+            position: relative;
+            top: 1px;
+        }

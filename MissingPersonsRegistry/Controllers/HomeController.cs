@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MissingPersonsRegistry.Data;
 using MissingPersonsRegistry.Models;
@@ -27,7 +28,12 @@ namespace MissingPersonsRegistry.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var persons = dbContext
+                .Persons
+                .Include(p=>p.DissapeerDetails)
+                .ToList();
+
+            return View(persons);
         }
 
         public IActionResult Create() 
@@ -50,6 +56,14 @@ namespace MissingPersonsRegistry.Controllers
 
             return Redirect("Index");
         }
+
+        public IActionResult Details(int id) 
+        {
+            var person = dbContext
+                .Persons
+                .FirstOrDefault(p => p.Id == id);
+            return View(person);
+        }    
         public IActionResult Privacy()
         {
             return View();
@@ -76,7 +90,7 @@ namespace MissingPersonsRegistry.Controllers
                     person.PersonImage.CopyTo(filestream);
                 }
             }
-            return filePath;
+            return $"~/images/{fileName}";
         }
     }
 }

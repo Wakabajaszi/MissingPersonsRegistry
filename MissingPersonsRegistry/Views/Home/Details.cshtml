@@ -1,0 +1,64 @@
+﻿@model MissingPersonsRegistry.Models.Person
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/edit.css" />
+<h1>Details</h1>
+
+<div>
+    <h4 class="ml-auto mr-auto">Osoba</h4>
+    <hr />
+    <div id="personContainer">
+        <div id="grid">
+            <div id="imgContainer"><img src="~/images/123.jpg"></div>
+            <div class="label">Imię Nazwisko</div>
+            <div class="value">Robert Lewandowski</div>
+
+            <div class="label">Data Uodzenia</div>
+            <div class="value">2019-02-02</div>
+
+            <div class="label">Włosy:</div>
+            <div class="value">Blond</div>
+            <div class="label">Oczy:</div>
+            <div class="value">Niebieskie</div>
+
+            <div class="label">Wzrost:</div>
+            <div class="value">180cm</div>
+            <div class="label">Waga:</div>
+            <div class="value">60kg</div>
+
+            <div class="label">Narodowość</div>
+            <div class="value">Polak</div>
+            <div class="label">Płeć</div>
+            <div class="value">Mężczyzna</div>
+
+            <div id="identifyingMarksLabel" class="label">Znaki szczególne</div>
+            <div id="identifyingMarksValue" class="value">Brak</div>
+        </div>
+
+
+    </div>
+    <br><hr>
+    <h1>Szczegóły zaginięcia</h1>
+    <div id="detailsContainer">
+        <div class="adressDetails">
+            <div class="item1">Miasto: Warszawa</div>
+            <div class="item2">Ulica: Kwiatowa 129/99</div>
+            <div class="item1">Kod Pocztowy: 123-22</div>
+        </div>
+        <div id="detailsDesc">
+            <h4>Ostatni Raz widziana/ny</h4><br>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id dolor ut risus vehicula fermentum at imperdiet nulla. Nulla facilisi. Nulla mollis commodo blandit. Vestibulum eu sapien in libero faucibus tincidunt. Nulla quis elit augue. Aenean fermentum lacinia lacus id blandit.
+        </div>
+    </div>
+    <br> <hr>
+    <div id="detailsButtonContainer">
+        <button class="detailsEditButton">Edytuj</button>
+        <button class="detailsDeleteButton">Usuń</button>
+    </div>
+
+</div>
+<div>
+    
+</div>
