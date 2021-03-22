@@ -3,38 +3,38 @@
 @{
     ViewData["Title"] = "Details";
 }
-<link rel="stylesheet" href="~/css/edit.css" />
-<h1>Details</h1>
+<link rel="stylesheet" href="~/css/details.css" />
+<h1>Szczegóły</h1>
 
 <div>
     <h4 class="ml-auto mr-auto">Osoba</h4>
     <hr />
     <div id="personContainer">
         <div id="grid">
-            <div id="imgContainer"><img src="~/images/123.jpg"></div>
-            <div class="label">Imię Nazwisko</div>
-            <div class="value">Robert Lewandowski</div>
+            <div id="imgContainer"><img src="@Url.Content(Model.ImageSrc)"></div>
+            <div class="label">Imię i Nazwisko:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Name) @Html.DisplayFor(Model => Model.Surname)</div>
 
-            <div class="label">Data Uodzenia</div>
-            <div class="value">2019-02-02</div>
+            <div class="label">Data Uordzenia:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.DateOfBirth)</div>
 
             <div class="label">Włosy:</div>
-            <div class="value">Blond</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Hair)</div>
             <div class="label">Oczy:</div>
-            <div class="value">Niebieskie</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Eyes)</div>
 
             <div class="label">Wzrost:</div>
-            <div class="value">180cm</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Height)cm</div>
             <div class="label">Waga:</div>
-            <div class="value">60kg</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Weight)kg</div>
 
             <div class="label">Narodowość</div>
-            <div class="value">Polak</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Nationality)</div>
             <div class="label">Płeć</div>
-            <div class="value">Mężczyzna</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Sex.Name)</div>
 
             <div id="identifyingMarksLabel" class="label">Znaki szczególne</div>
-            <div id="identifyingMarksValue" class="value">Brak</div>
+            <div id="identifyingMarksValue" class="value">@Html.DisplayFor(Model => Model.IdentifyingMarks)</div>
         </div>
 
 
@@ -43,18 +43,19 @@
     <h1>Szczegóły zaginięcia</h1>
     <div id="detailsContainer">
         <div class="adressDetails">
-            <div class="item1">Miasto: Warszawa</div>
-            <div class="item2">Ulica: Kwiatowa 129/99</div>
-            <div class="item1">Kod Pocztowy: 123-22</div>
+            <div class="item1">Miasto: @Html.DisplayFor(Model => Model.DissapeerDetails.City)</div>
+            <div class="item2">Ulica: @Html.DisplayFor(Model => Model.DissapeerDetails.Street)</div>
+            <div class="item1">Kod Pocztowy: @Html.DisplayFor(Model => Model.DissapeerDetails.PostalCode)</div>
         </div>
         <div id="detailsDesc">
-            <h4>Ostatni Raz widziana/ny</h4><br>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id dolor ut risus vehicula fermentum at imperdiet nulla. Nulla facilisi. Nulla mollis commodo blandit. Vestibulum eu sapien in libero faucibus tincidunt. Nulla quis elit augue. Aenean fermentum lacinia lacus id blandit.
+            <h4>Ostatni Raz widziana/ny <p>@Html.DisplayFor(Model => Model.DissapeerDetails.DissapeerDate)</p></h4> <br>
+
+            <p>@Html.DisplayFor(Model => Model.DissapeerDetails.Description)</p>
         </div>
     </div>
     <br> <hr>
     <div id="detailsButtonContainer">
-        <button class="detailsEditButton">Edytuj</button>
+        <button class="detailsEditButton" onclick="window.location = '@Url.Action("Edit","Home",new { id = Model.Id })'">Edytuj</button>
         <button class="detailsDeleteButton">Usuń</button>
     </div>
 

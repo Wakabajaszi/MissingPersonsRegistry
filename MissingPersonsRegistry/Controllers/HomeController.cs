@@ -61,13 +61,50 @@ namespace MissingPersonsRegistry.Controllers
         {
             var person = dbContext
                 .Persons
+                .Include(d=>d.DissapeerDetails)
+                .Include(d=>d.Sex)
                 .FirstOrDefault(p => p.Id == id);
             return View(person);
-        }    
-        public IActionResult Privacy()
-        {
-            return View();
         }
+        public IActionResult Edit(int id) 
+        {
+            var person = dbContext
+                .Persons
+                .Include(d => d.DissapeerDetails)
+                .Include(d => d.Sex)
+                .FirstOrDefault(p => p.Id == id);
+            return View(person);
+        }
+        [HttpPost]
+        public IActionResult Edit(Person person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("Home/Edit");
+            }
+            var editedPerson = dbContext.Persons.FirstOrDefault(p => p.Id == person.Id);
+            
+            if(person.PersonImage != null) 
+            {
+                string filePath = UploadFile(person);
+                person.ImageSrc = filePath;
+                DeleteFile(editedPerson.ImageSrc);
+            }
+            else 
+            {
+                person.ImageSrc = editedPerson.ImageSrc;
+            }
+             
+            
+
+
+            dbContext.Entry(editedPerson).CurrentValues.SetValues(person);
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Details", "Home", new { person.Id });
+            
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -91,6 +128,19 @@ namespace MissingPersonsRegistry.Controllers
                 }
             }
             return $"~/images/{fileName}";
+        }
+        private void DeleteFile(string oldImgSrc) 
+        {
+            if(oldImgSrc != null) 
+            {
+                string oldImageSrc = this.webHostEnvironment.WebRootPath + $"\\images\\{oldImgSrc.Remove(0, 9)}";
+                FileInfo file = new FileInfo(oldImageSrc);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+            }
+            
         }
     }
 }

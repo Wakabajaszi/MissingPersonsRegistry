@@ -12,7 +12,7 @@
                 <div class="mpName">@item.Name @item.Surname</div>
                 <div class="mpDate">Data zaginięcia: @item.DissapeerDetails.DissapeerDate</div>
                 <div class="mpPlace">Miejsce: @item.DissapeerDetails.City</div>
-                <button asp-controller="Home" value="1" onclick="window.location = '@Url.Action("Details","Home",new { id = item.Id })'" class="mpDetailsButton">Szczegóły</button>
+                <button asp-controller="Home" onclick="window.location = '@Url.Action("Details","Home",new { id = item.Id })'" class="mpDetailsButton">Szczegóły</button>
 
             </div>
         </div>

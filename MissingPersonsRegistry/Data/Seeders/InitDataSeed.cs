@@ -64,7 +64,7 @@ namespace DissapearPersonsRegistry.Data.Seeders
                         City="Warszawa",
                         Street="Kwiatowa-11",
                         PostalCode="12-123",
-                        Desciption="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
+                        Description="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
                         DissapeerDate = DateTime.Parse("2001-04-12 15:15:15")
                     }
                 },
@@ -86,7 +86,7 @@ namespace DissapearPersonsRegistry.Data.Seeders
                         City="Kraków",
                         Street="Kwiatowa-11",
                         PostalCode="12-123",
-                        Desciption="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
+                        Description="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
                         DissapeerDate = DateTime.Parse("2003-03-22 11:16:15")
                     }
                 },
@@ -108,7 +108,7 @@ namespace DissapearPersonsRegistry.Data.Seeders
                         City="Wrocław",
                         Street="Kwiatowa-11",
                         PostalCode="12-123",
-                        Desciption="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
+                        Description="sadasdasasasasasasasasasasasasasasasasasasasasasasasasasasasdadsasd",
                         DissapeerDate = DateTime.Parse("2003-03-22 11:16:15")
                     }
                 },
