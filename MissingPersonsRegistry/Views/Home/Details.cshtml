@@ -4,10 +4,9 @@
     ViewData["Title"] = "Details";
 }
 <link rel="stylesheet" href="~/css/details.css" />
-<h1>Szczegóły</h1>
+<h1 class="text-center">Szczegóły</h1>
 
 <div>
-    <h4 class="ml-auto mr-auto">Osoba</h4>
     <hr />
     <div id="personContainer">
         <div id="grid">
@@ -56,7 +55,7 @@
     <br> <hr>
     <div id="detailsButtonContainer">
         <button class="detailsEditButton" onclick="window.location = '@Url.Action("Edit","Home",new { id = Model.Id })'">Edytuj</button>
-        <button class="detailsDeleteButton">Usuń</button>
+        <button class="detailsDeleteButton" onclick="window.location = '@Url.Action("Delete","Home",new { id = Model.Id })'">Usuń</button>
     </div>
 
 </div>

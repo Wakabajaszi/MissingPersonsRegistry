@@ -95,14 +95,29 @@ namespace MissingPersonsRegistry.Controllers
                 person.ImageSrc = editedPerson.ImageSrc;
             }
              
-            
-
-
             dbContext.Entry(editedPerson).CurrentValues.SetValues(person);
             dbContext.SaveChanges();
 
             return RedirectToAction("Details", "Home", new { person.Id });
             
+        }
+        public IActionResult Delete(int id) 
+        {
+            var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);
+
+            return View(person);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(int id)
+        {
+            var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);
+            DeleteFile(person.ImageSrc);
+            dbContext.Persons.Remove(person);
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
         }
 
 

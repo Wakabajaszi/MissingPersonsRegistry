@@ -1,0 +1,38 @@
+﻿@model MissingPersonsRegistry.Models.Person
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<h3 class="text-center">Czy na pewno chesz usunąć?</h3>
+<div class="col-md-4 ml-auto mr-auto">
+    <hr />
+    <dl class="row" style="font-size:24px;">
+        <dt class = "col-sm-4" >
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-6">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd class = "col-sm-6">
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt class = "col-sm-4">
+            @Html.DisplayNameFor(model => model.Nationality)
+        </dt>
+        <dd class = "col-sm-6">
+            @Html.DisplayFor(model => model.Nationality)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <button asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark" style="margin-left:180px;">Powrót</button>
+        <input type="submit" value="Usuń" class="btn btn-danger" /> 
+    </form>
+</div>
