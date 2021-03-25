@@ -1,6 +1,7 @@
 ﻿using DissapearPersonsRegistry.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MissingPersonsRegistry.Data;
 using System;
 using System.Collections.Generic;
@@ -26,19 +27,37 @@ namespace DissapearPersonsRegistry.Controllers
         {
             await CreateRoles();
 
-            var users = dbContext.Users;
+            var users = dbContext.Users.ToList();
             var usersParse = UserParserAll(users);
 
             return View(usersParse);
             
         }
-        public async Task CreateRoles()
+        public IActionResult Edit(string id) 
+        {
+            var user = dbContext.Users.First(p => p.Id == id.ToString());
+            if(user == null) 
+            {
+                throw new Exception("Nie znaleziono użytkownika");
+            }
+            var userParse = UserParser(user);
+            return View(userParse);
+        }
+        [HttpPost]
+        public IActionResult Edit(User user) 
+        {
+            IdentityUserParser(user);
+            return RedirectToAction("Index", "Account");
+        }
+
+
+        private async Task CreateRoles()
         {
             var isRoleExists = await roleManager.FindByNameAsync("Admin");
             if (isRoleExists == null)
             {
                 IdentityRole adminRole = new IdentityRole { Name = "Admin" };
-                IdentityRole guestRole = new IdentityRole { Name = "Guest" };
+                IdentityRole guestRole = new IdentityRole { Name = "User" };
 
                 IdentityResult resultAdmin = await roleManager.CreateAsync(adminRole);
                 IdentityResult resultGuest = await roleManager.CreateAsync(guestRole);
@@ -54,11 +73,12 @@ namespace DissapearPersonsRegistry.Controllers
             var allUsers = new List<User>();
             foreach (var item in userIdentity)
             {
-                var getRoleId = dbContext.UserRoles.First(p => p.UserId == item.Id);
+                var getRoleId = dbContext.UserRoles.FirstOrDefault(p => p.UserId == item.Id);
                 var getRole = dbContext.Roles.FirstOrDefault(p => p.Id == getRoleId.RoleId);
                 var user = new User()
                 {
                     Id = item.Id,
+                    UserName = item.UserName,
                     Email = item.Email,
                     RoleName = getRole.Name
                 };
@@ -74,10 +94,31 @@ namespace DissapearPersonsRegistry.Controllers
             var user = new User()
             {
                 Id = userIdentity.Id,
+                UserName = userIdentity.UserName,
                 Email = userIdentity.Email,
                 RoleName = getRoleName.Name
             };
             return user;
+        }
+        private void IdentityUserParser(User user)
+        {
+
+
+            var getUserIdentity = dbContext.Users.FirstOrDefault(p => p.Id == user.Id);
+
+            getUserIdentity.UserName = user.UserName;
+            getUserIdentity.Email = user.Email;
+
+            var userRole = dbContext.UserRoles.FirstOrDefault(p => p.UserId == user.Id);
+            var role = dbContext.Roles.FirstOrDefault(p => p.Name == user.RoleName);
+
+            dbContext.Remove(userRole);
+            dbContext.SaveChanges();
+
+            userRole.RoleId = role.Id;
+            dbContext.UserRoles.Add(userRole);
+            dbContext.SaveChanges();
+
         }
     }
 }
