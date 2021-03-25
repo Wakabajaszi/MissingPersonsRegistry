@@ -27,7 +27,7 @@ namespace DissapearPersonsRegistry.Controllers
         {
             await CreateRoles();
 
-            var users = dbContext.Users.ToList();
+            var users = dbContext.Users.ToList().Skip(1);
             var usersParse = UserParserAll(users);
 
             return View(usersParse);
@@ -48,6 +48,22 @@ namespace DissapearPersonsRegistry.Controllers
         {
             IdentityUserParser(user);
             return RedirectToAction("Index", "Account");
+        }
+        public IActionResult Delete(string id) 
+        {
+            var user = dbContext.Users.FirstOrDefault(p => p.Id == id);
+            var userParse = UserParser(user);
+            return View(userParse);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(string id)
+        {
+            var user = dbContext.Users.FirstOrDefault(p => p.Id == id);
+            dbContext.Users.Remove(user);
+            dbContext.SaveChanges();
+            return RedirectToAction("Index","Account");
         }
 
 
