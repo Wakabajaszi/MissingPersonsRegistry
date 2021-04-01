@@ -1,0 +1,16 @@
+﻿@model IEnumerable<MissingPersonsRegistry.Models.Person>
+
+
+@foreach (var item in Model)
+{
+    <div style="" class="mpContainer">
+        <div class="mpImgContainer"><img src="@Url.Content(item.ImageSrc)"></div>
+        <div class="mpDataContainer">
+            <div class="mpName">@item.Name @item.Surname</div>
+            <div class="mpDate">Data zaginięcia: @item.DissapeerDetails.DissapeerDate</div>
+            <div class="mpPlace">Miejsce: @item.DissapeerDetails.City</div>
+            <button asp-controller="Home" onclick="window.location = '@Url.Action("Details","Home",new { id = item.Id })'" class="mpDetailsButton">Szczegóły</button>
+
+        </div>
+    </div>
+}

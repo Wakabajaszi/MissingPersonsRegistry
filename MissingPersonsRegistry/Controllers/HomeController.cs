@@ -26,15 +26,30 @@ namespace MissingPersonsRegistry.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id = 0)
         {
-            var persons = dbContext
+            if (id == 0)
+            {
+                var persons = dbContext
                 .Persons
-                .Include(p=>p.DissapeerDetails)
+                .Include(p => p.DissapeerDetails)
+                .Include(p => p.Sex)
                 .ToList();
-
-            return View(persons);
+                return View(persons);
+            }
+            else 
+            {
+                var persons = dbContext
+                .Persons
+                .Include(p => p.DissapeerDetails)
+                .Include(p => p.Sex)
+                .Where(p=>p.SexId==id)
+                .ToList();
+                return View(persons);
+            }
+            
         }
+       
 
         public IActionResult Create() 
         {
