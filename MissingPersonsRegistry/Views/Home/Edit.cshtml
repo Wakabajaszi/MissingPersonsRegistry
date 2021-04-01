@@ -1,15 +1,15 @@
 ﻿@model MissingPersonsRegistry.Models.Person
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1 class="text-center">Dodaj</h1>
+<h1 class="text-center">Edytuj</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4 ml-auto mr-auto">
-        <form asp-action="Create" enctype="multipart/form-data">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div id="partOne">
                 <div class="form-group">
@@ -54,7 +54,7 @@
                     <input asp-for="Eyes" class="form-control" />
                     <span asp-validation-for="Eyes" class="text-danger"></span>
                 </div>
-               
+
                 <div id="nextButton" class="form-group">
                     <input type="button" value="Dalej" class="btn btn-primary" />
                 </div>
@@ -107,35 +107,13 @@
                     <input type="submit" value="Dodaj" class="btn btn-primary" />
                 </div>
             </div>
-            
         </form>
     </div>
 </div>
-
 
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
 
-<script type="text/javascript">
-    const button = document.getElementById("nextButton");
-    const buttonPreviousPage = document.getElementById("previousPageButton");
-    const divPartOne = document.getElementById("partOne");
-    const divPartTwo = document.getElementById("partTwo");
-
-    divPartTwo.style.display = "none";
-
-    const nextPartForm = () =>
-    {
-        divPartOne.style.display = "none";
-        divPartTwo.style.display = "";
-    }
-    const previousPartForm = () => {
-        divPartOne.style.display = "";
-        divPartTwo.style.display = "none";
-
-    }
-    button.addEventListener("click", nextPartForm);
-    buttonPreviousPage.addEventListener("click", previousPartForm);
-</script>
+<script type="text/javascript" src="~/js/formPart.js"></script>

@@ -1,0 +1,64 @@
+﻿@model MissingPersonsRegistry.Models.Person
+
+@{
+    ViewData["Title"] = "Details";
+}
+<link rel="stylesheet" href="~/css/details.css" />
+<h1 class="text-center">Szczegóły</h1>
+
+<div>
+    <hr />
+    <div id="personContainer">
+        <div id="grid">
+            <div id="imgContainer"><img src="@Url.Content(Model.ImageSrc)"></div>
+            <div class="label">Imię i Nazwisko:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Name) @Html.DisplayFor(Model => Model.Surname)</div>
+
+            <div class="label">Data Uordzenia:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.DateOfBirth)</div>
+
+            <div class="label">Włosy:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Hair)</div>
+            <div class="label">Oczy:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Eyes)</div>
+
+            <div class="label">Wzrost:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Height)cm</div>
+            <div class="label">Waga:</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Weight)kg</div>
+
+            <div class="label">Narodowość</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Nationality)</div>
+            <div class="label">Płeć</div>
+            <div class="value">@Html.DisplayFor(Model => Model.Sex.Name)</div>
+
+            <div id="identifyingMarksLabel" class="label">Znaki szczególne</div>
+            <div id="identifyingMarksValue" class="value">@Html.DisplayFor(Model => Model.IdentifyingMarks)</div>
+        </div>
+
+
+    </div>
+    <br><hr>
+    <h1>Szczegóły zaginięcia</h1>
+    <div id="detailsContainer">
+        <div class="adressDetails">
+            <div class="item1">Miasto: @Html.DisplayFor(Model => Model.DissapeerDetails.City)</div>
+            <div class="item2">Ulica: @Html.DisplayFor(Model => Model.DissapeerDetails.Street)</div>
+            <div class="item1">Kod Pocztowy: @Html.DisplayFor(Model => Model.DissapeerDetails.PostalCode)</div>
+        </div>
+        <div id="detailsDesc">
+            <h4>Ostatni Raz widziana/ny <p>@Html.DisplayFor(Model => Model.DissapeerDetails.DissapeerDate)</p></h4> <br>
+
+            <p>@Html.DisplayFor(Model => Model.DissapeerDetails.Description)</p>
+        </div>
+    </div>
+    <br> <hr>
+    <div id="detailsButtonContainer">
+        <button class="detailsEditButton" onclick="window.location = '@Url.Action("Edit","Home",new { id = Model.Id })'">Edytuj</button>
+        <button class="detailsDeleteButton" onclick="window.location = '@Url.Action("Delete","Home",new { id = Model.Id })'">Usuń</button>
+    </div>
+
+</div>
+<div>
+    
+</div>

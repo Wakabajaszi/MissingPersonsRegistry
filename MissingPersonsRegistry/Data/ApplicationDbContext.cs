@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using MissingPersonsRegistry.Models;
+using DissapearPersonsRegistry.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace MissingPersonsRegistry.Data
 {
@@ -13,8 +15,11 @@ namespace MissingPersonsRegistry.Data
             : base(options)
         {
         }
+        
         public DbSet<Person> Persons { get; set; }
         public DbSet<Sex> Sex { get; set; }
         public DbSet<DissapearDetails> DissapearDetails { get; set; }
+        public DbSet<DissapearPersonsRegistry.Models.User> User { get; set; }
+        //public DbSet<User> Users { get; set; }
     }
 }

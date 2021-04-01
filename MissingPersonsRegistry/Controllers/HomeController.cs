@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MissingPersonsRegistry.Data;
 using MissingPersonsRegistry.Models;
@@ -25,10 +26,30 @@ namespace MissingPersonsRegistry.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int id = 0)
         {
-            return View();
+            if (id == 0)
+            {
+                var persons = dbContext
+                .Persons
+                .Include(p => p.DissapeerDetails)
+                .Include(p => p.Sex)
+                .ToList();
+                return View(persons);
+            }
+            else 
+            {
+                var persons = dbContext
+                .Persons
+                .Include(p => p.DissapeerDetails)
+                .Include(p => p.Sex)
+                .Where(p=>p.SexId==id)
+                .ToList();
+                return View(persons);
+            }
+            
         }
+       
 
         public IActionResult Create() 
         {
@@ -50,10 +71,70 @@ namespace MissingPersonsRegistry.Controllers
 
             return Redirect("Index");
         }
-        public IActionResult Privacy()
+
+        public IActionResult Details(int id) 
         {
-            return View();
+            var person = dbContext
+                .Persons
+                .Include(d=>d.DissapeerDetails)
+                .Include(d=>d.Sex)
+                .FirstOrDefault(p => p.Id == id);
+            return View(person);
         }
+        public IActionResult Edit(int id) 
+        {
+            var person = dbContext
+                .Persons
+                .Include(d => d.DissapeerDetails)
+                .Include(d => d.Sex)
+                .FirstOrDefault(p => p.Id == id);
+            return View(person);
+        }
+        [HttpPost]
+        public IActionResult Edit(Person person)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Redirect("Home/Edit");
+            }
+            var editedPerson = dbContext.Persons.FirstOrDefault(p => p.Id == person.Id);
+            
+            if(person.PersonImage != null) 
+            {
+                string filePath = UploadFile(person);
+                person.ImageSrc = filePath;
+                DeleteFile(editedPerson.ImageSrc);
+            }
+            else 
+            {
+                person.ImageSrc = editedPerson.ImageSrc;
+            }
+             
+            dbContext.Entry(editedPerson).CurrentValues.SetValues(person);
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Details", "Home", new { person.Id });
+            
+        }
+        public IActionResult Delete(int id) 
+        {
+            var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);
+
+            return View(person);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("Delete")]
+        public IActionResult ConfirmDelete(int id)
+        {
+            var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);
+            DeleteFile(person.ImageSrc);
+            dbContext.Persons.Remove(person);
+            dbContext.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -76,7 +157,20 @@ namespace MissingPersonsRegistry.Controllers
                     person.PersonImage.CopyTo(filestream);
                 }
             }
-            return filePath;
+            return $"~/images/{fileName}";
+        }
+        private void DeleteFile(string oldImgSrc) 
+        {
+            if(oldImgSrc != null) 
+            {
+                string oldImageSrc = this.webHostEnvironment.WebRootPath + $"\\images\\{oldImgSrc.Remove(0, 9)}";
+                FileInfo file = new FileInfo(oldImageSrc);
+                if (file.Exists)
+                {
+                    file.Delete();
+                }
+            }
+            
         }
     }
 }

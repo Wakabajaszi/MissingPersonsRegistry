@@ -1,37 +1,57 @@
-﻿@{
+﻿@model IEnumerable<MissingPersonsRegistry.Models.Person>
+@{
     ViewData["Title"] = "Home Page";
 }
-
+<link rel="stylesheet" href="~/css/index.css" />
 <div id="siteContainer">
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
+    <div>
+
+        <div class="float-right">
+            <label>Wyświetl</label>
+            <select>
+                <option value="0">Wszyszcy</option>
+                <option value="1">Mężczyźni</option>
+                <option value="2">Kobiety</option>
+
+            </select>
+            <a id="changeUrl" href="@Url.Action("Index","Home", new {id = 0})">Filtruj</a>
         </div>
+        
+        <div style="clear:both;">
+            @foreach (var item in Model)
+            {
+                <div style="" class="mpContainer">
+                    <div class="mpImgContainer"><img src="@Url.Content(item.ImageSrc)"></div>
+                    <div class="mpDataContainer">
+                        <div class="mpName">@item.Name @item.Surname</div>
+                        <div class="mpDate">Data zaginięcia: @item.DissapeerDetails.DissapeerDate</div>
+                        <div class="mpPlace">Miejsce: @item.DissapeerDetails.City</div>
+                        <button asp-controller="Home" onclick="window.location = '@Url.Action("Details","Home",new { id = item.Id })'" class="mpDetailsButton">Szczegóły</button>
 
-    </div>
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
+                    </div>
+                </div>
+            }
         </div>
-
+        
     </div>
 
-    <div class="mpContainer">
-        <div class="mpImgContainer"><img src="~/images/123.jpg"></div>
-        <div class="mpDataContainer">
-            <div class="mpName">Robert Lewandowski</div>
-            <div class="mpDate">Data zaginięcia: 2020-05-12</div>
-            <div class="mpPlace">Miejsce: Warszawa</div>
-            <button class="mpDetailsButton">Szczegóły</button>
-        </div>
-
-    </div>
 </div>
+
+<script type="text/javascript">
+    const query = document.querySelector("select");
+
+    query.addEventListener("change", (event) => {
+        const value = event.target.value
+        const links = document.getElementById("changeUrl");
+        if (value == 0) {
+            links.href= '@Url.Action("Index","Home", new {id = 0})'
+        }
+        else if (value == 1) {
+            links.href= '@Url.Action("Index","Home", new {id = 1})'
+        }
+        else
+        {
+            links.href= '@Url.Action("Index","Home", new {id = 2})'
+        }
+    })
+</script>
