@@ -1,4 +1,5 @@
 ﻿using DissapearPersonsRegistry.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace DissapearPersonsRegistry.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
         public UserManager<IdentityUser> userManager;
@@ -27,7 +29,7 @@ namespace DissapearPersonsRegistry.Controllers
         {
             await CreateRoles();
 
-            var users = dbContext.Users.ToList().Skip(1);
+            var users = dbContext.Users.ToList();
             var usersParse = UserParserAll(users);
 
             return View(usersParse);
