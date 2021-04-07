@@ -14,21 +14,15 @@ namespace DissapearPersonsRegistry.Controllers
     [Authorize(Roles = "Admin")]
     public class AccountController : Controller
     {
-        public UserManager<IdentityUser> userManager;
         private readonly ApplicationDbContext dbContext;
-        public RoleManager<IdentityRole> roleManager;
-
-        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager, ApplicationDbContext dbContext)
+        public AccountController(ApplicationDbContext dbContext)
         {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
             this.dbContext = dbContext;
         }
 
         public async Task<IActionResult> Index() 
         {
-            await CreateRoles();
-
+           
             var users = dbContext.Users.ToList();
             var usersParse = UserParserAll(users);
 
@@ -69,22 +63,7 @@ namespace DissapearPersonsRegistry.Controllers
         }
 
 
-        private async Task CreateRoles()
-        {
-            var isRoleExists = await roleManager.FindByNameAsync("Admin");
-            if (isRoleExists == null)
-            {
-                IdentityRole adminRole = new IdentityRole { Name = "Admin" };
-                IdentityRole guestRole = new IdentityRole { Name = "User" };
-
-                IdentityResult resultAdmin = await roleManager.CreateAsync(adminRole);
-                IdentityResult resultGuest = await roleManager.CreateAsync(guestRole);
-
-                IdentityUser user1 = await userManager.FindByIdAsync("b95768d3-ec6a-4238-894b-08054ee8fc51");
-                resultAdmin = await userManager.AddToRoleAsync(user1, "Admin");
-
-            }
-        }
+       
 
         private List<User> UserParserAll(IEnumerable<IdentityUser> userIdentity)
         {
