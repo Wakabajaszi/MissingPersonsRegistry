@@ -1,4 +1,5 @@
 using DissapearPersonsRegistry.Data.Seeders;
+using DissapearPersonsRegistry.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,7 @@ namespace MissingPersonsRegistry
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<InitDataSeed>();
+            services.AddScoped<IHomeService, HomeService>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddDefaultTokenProviders()
