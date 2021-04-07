@@ -35,6 +35,7 @@ namespace MissingPersonsRegistry
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddScoped<InitDataSeed>();
             services.AddScoped<IHomeService, HomeService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddDefaultTokenProviders()
