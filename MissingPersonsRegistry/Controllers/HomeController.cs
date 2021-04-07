@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace MissingPersonsRegistry.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -26,6 +28,7 @@ namespace MissingPersonsRegistry.Controllers
             this.webHostEnvironment = webHostEnvironment;
         }
 
+        [AllowAnonymous]
         public IActionResult Index(int id = 0)
         {
             if (id == 0)
@@ -71,7 +74,7 @@ namespace MissingPersonsRegistry.Controllers
 
             return Redirect("Index");
         }
-
+        [AllowAnonymous]
         public IActionResult Details(int id) 
         {
             var person = dbContext
@@ -81,6 +84,8 @@ namespace MissingPersonsRegistry.Controllers
                 .FirstOrDefault(p => p.Id == id);
             return View(person);
         }
+
+        [Authorize(Roles ="Admin")]
         public IActionResult Edit(int id) 
         {
             var person = dbContext
@@ -90,7 +95,9 @@ namespace MissingPersonsRegistry.Controllers
                 .FirstOrDefault(p => p.Id == id);
             return View(person);
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(Person person)
         {
             if (!ModelState.IsValid)
@@ -116,6 +123,8 @@ namespace MissingPersonsRegistry.Controllers
             return RedirectToAction("Details", "Home", new { person.Id });
             
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id) 
         {
             var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);
@@ -125,6 +134,7 @@ namespace MissingPersonsRegistry.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ConfirmDelete(int id)
         {
             var person = dbContext.Persons.FirstOrDefault(p => p.Id == id);

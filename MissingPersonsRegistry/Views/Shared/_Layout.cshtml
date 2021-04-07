@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,8 +9,8 @@
     <title>@ViewData["Title"] - MissingPersonsRegistry</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-  
-    
+
+
 </head>
 <body>
     <header>
@@ -26,26 +29,32 @@
                         <li class="nav-item text-light">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Create">Dodaj zaginionego</a>
                         </li>
+                        @if (SignInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item text-light">
+                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Index">Użytkownicy</a>
+                            </li>
+                        }
                     </ul>
-                    <partial name="_LoginPartial" />
+                        <partial name="_LoginPartial" />
+                    </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <div >
-        <main role="main" class="pb-3 ">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer bg-dark text-light">
-        <div class="container">
-            &copy; 2021 - MissingPersonsRegistry
+            </nav>
+        </header>
+        <div>
+            <main role="main" class="pb-3 ">
+                @RenderBody()
+            </main>
         </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
+
+        <footer class="border-top footer bg-dark text-light">
+            <div class="container">
+                &copy; 2021 - MissingPersonsRegistry
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
 </html>

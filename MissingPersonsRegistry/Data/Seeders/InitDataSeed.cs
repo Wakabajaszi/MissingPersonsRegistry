@@ -1,4 +1,5 @@
-﻿using MissingPersonsRegistry.Data;
+﻿using Microsoft.AspNetCore.Identity;
+using MissingPersonsRegistry.Data;
 using MissingPersonsRegistry.Models;
 using System;
 using System.Collections.Generic;
@@ -10,13 +11,16 @@ namespace DissapearPersonsRegistry.Data.Seeders
     public class InitDataSeed
     {
         private readonly ApplicationDbContext dbContext;
+        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<IdentityUser> userManager;
 
-
-        public InitDataSeed(ApplicationDbContext dbContext)
+        public InitDataSeed(ApplicationDbContext dbContext, RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             this.dbContext = dbContext;
+            this.roleManager = roleManager;
+            this.userManager = userManager;
         }
-        public void Seed() 
+        public async void Seed() 
         {
             if (!dbContext.Sex.Any()) 
             {
@@ -27,6 +31,26 @@ namespace DissapearPersonsRegistry.Data.Seeders
             {
                 dbContext.Persons.AddRange(PersonsSeed());
                 dbContext.SaveChanges();
+            }
+            await CreateRoles();
+        }
+       
+        private async Task CreateRoles()
+        {
+            var isRoleExists = await roleManager.FindByNameAsync("Admin");
+            if (isRoleExists == null)
+            {
+                IdentityRole adminRole = new IdentityRole { Name = "Admin" };
+                IdentityRole guestRole = new IdentityRole { Name = "User" };
+
+                IdentityResult resultAdmin = await roleManager.CreateAsync(adminRole);
+                IdentityResult resultGuest = await roleManager.CreateAsync(guestRole);
+
+                var user = new IdentityUser { UserName = "admin", Email = "admin@admin.pl"};
+
+                var result = await  userManager.CreateAsync(user, "Qwe123!@#");
+                resultAdmin = await userManager.AddToRoleAsync(user, "Admin");
+
             }
         }
 
