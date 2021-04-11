@@ -6,8 +6,8 @@ MissingPersonsRegistry is asp.net core mvc web aplication. Aplication has a thre
 :two: Authenticated user - has the same permissions as not auhenticeted user and can add new missing person.<br/>
 :three: Administrator - has the same permissions as authenticated user and can edit, delete informations about missing persons and can manage user accounts.
 
-Admnisitrator account - Email: "admin@admin.pl" password:Qwe123!@#
-
 I have added to repository my database backup with initial settings.
+
+Admnisitrator account - Email: "admin@admin.pl" password:Qwe123!@#
 
 I am still working on this project.
